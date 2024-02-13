@@ -28,7 +28,10 @@ function RegisterForm({ onClick }) {
   };
 
   return (
-    <form className="flex flex-col justify-around items-center p-[4rem] ">
+    <form
+      className="flex flex-col justify-around items-center p-[4rem]"
+      onSubmit={handleSubmit}
+    >
       <div className="text-2xl font-bold">
         <span className="text-amber-600 underline">Create</span> an account
       </div>

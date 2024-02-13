@@ -10,7 +10,7 @@ function Input({
   onChange,
 }) {
   const extendedClass = errorMessage
-    ? "border-red-500 focus:ring-red-300 w-full"
+    ? "border-2 border-red-500 focus:ring-red-300 w-full"
     : "border-1 focus:border-amber-500 focus:outline-amber-500 border-amber-500 w-full";
   return (
     <>
@@ -27,7 +27,11 @@ function Input({
           onChange={onChange}
         />
       </label>
-      <div>{errorMessage ? <small>{errorMessage}</small> : null}</div>
+      <div>
+        {errorMessage ? (
+          <small className="text-red-500">{errorMessage}</small>
+        ) : null}
+      </div>
     </>
   );
 }
