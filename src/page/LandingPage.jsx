@@ -19,7 +19,7 @@ function LandingPage() {
             because Life is story ,Let's tell us
           </p>
         </div>
-        <button className="btn bg-orange-500 hover:bg-orange-600 text-white rounded-full">
+        <button className="btn bg-amber-500 hover:bg-amber-600 text-white rounded-full">
           Create your own
         </button>
       </div>

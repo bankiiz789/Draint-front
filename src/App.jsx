@@ -1,4 +1,3 @@
-import Input from "./components/input";
 import Container from "./layout/Container";
 import Navbar from "./layout/Navbar";
 import Router from "./routes";
