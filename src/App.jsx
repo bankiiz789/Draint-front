@@ -1,15 +1,17 @@
-import Container from "./layout/Container";
-import Navbar from "./layout/Navbar";
 import Router from "./routes";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
       <Router />
-      {/* <Container /> */}
-      {/* <Navbar /> */}
-      {/* <button className="btn btn-primary">hello world</button> */}
-      {/* <Input>hello world</Input> */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        theme="colored"
+        transition={Slide}
+      />
     </>
   );
 }

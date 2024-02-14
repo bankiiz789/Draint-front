@@ -6,6 +6,7 @@ import RegisterForm from "../features/auth/components/RegisterForm";
 
 function Navbar() {
   const [haveAccount, setHaveAccount] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleHaveAccount = (e) => {
     e.preventDefault();

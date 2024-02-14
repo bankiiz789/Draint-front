@@ -3,6 +3,8 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useState } from "react";
 import validateRegister from "../validations/validate-register";
+import useAuth from "../hooks/use-auth";
+import { toast } from "react-toastify";
 
 const initial = {
   email: "",
@@ -15,15 +17,32 @@ function RegisterForm({ onClick }) {
   const [input, setInput] = useState(initial);
   const [errorRegis, setErrorRegis] = useState({});
 
+  console.log(errorRegis);
+
+  const { register } = useAuth();
+
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+    setErrorRegis({});
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validateError = validateRegister(input);
-    if (validateError) {
-      return setErrorRegis(validateError);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const validateError = validateRegister(input);
+      if (validateError) {
+        return setErrorRegis(validateError);
+      }
+
+      await register(input);
+
+      toast.success("register successfully");
+    } catch (err) {
+      console.log(err.response);
+      if (err.response?.data == "username and email already in use") {
+        return setErrorRegis("email or username is already in used");
+      }
+      toast.error(err.response?.data.message);
     }
   };
 
@@ -45,6 +64,7 @@ function RegisterForm({ onClick }) {
           onChange={handleChangeInput}
           errorMessage={errorRegis.email}
         />
+
         <Input
           type="text"
           placeholder="Enter your Username"
