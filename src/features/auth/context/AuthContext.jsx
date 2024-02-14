@@ -1,11 +1,25 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import * as authApi from "../../../api/auth-api";
 import { storeToken } from "../../../utils/local-storage";
+import { getToken, clearToken } from "../../../utils/local-storage";
 
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
+
+  useEffect(() => {
+    if (getToken()) {
+      authApi
+        .fetchMe()
+        .then((res) => {
+          setAuthUser(res.data.user);
+        })
+        .catch((err) => {
+          toast.error(err.response?.data.message);
+        });
+    }
+  }, []);
 
   const register = async (user) => {
     const res = await authApi.register(user);
@@ -19,8 +33,14 @@ export default function AuthContextProvider({ children }) {
     setAuthUser(res.data.user);
     storeToken(res.data.accessToken);
   };
+
+  const logout = () => {
+    setAuthUser(null);
+    clearToken();
+  };
+
   return (
-    <AuthContext.Provider value={{ register, login }}>
+    <AuthContext.Provider value={{ register, login, authUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

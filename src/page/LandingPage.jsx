@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "../components/Modal";
+import LoginForm from "../features/auth/components/LoginForm";
 
 function LandingPage() {
   return (
@@ -19,9 +20,12 @@ function LandingPage() {
             because Life is story ,Let's tell us
           </p>
         </div>
-        <button className="btn bg-amber-500 hover:bg-amber-600 text-white rounded-full">
+        {/* <button className="btn bg-amber-500 hover:bg-amber-600 text-white rounded-full">
           Create your own
-        </button>
+        </button> */}
+        <Modal title="Create your Own">
+          <LoginForm />
+        </Modal>
       </div>
       <div className="  bg-slate-200 border border-green-400">
         picture

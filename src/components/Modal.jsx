@@ -5,7 +5,7 @@ function Modal({ children, title }) {
     <>
       {/* ปุ่ม open modal */}
       <button
-        className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none"
+        className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
         onClick={() => document.getElementById("my_modal_2").showModal()}
       >
         {title}

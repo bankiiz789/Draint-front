@@ -33,6 +33,7 @@ function RegisterForm({ onClick }) {
       }
 
       await register(input);
+      document.getElementById("my_modal_2").close();
 
       toast.success("register successfully");
     } catch (err) {

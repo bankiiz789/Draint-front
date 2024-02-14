@@ -5,6 +5,7 @@ import { useState } from "react";
 import validateLogin from "../validations/validate-login";
 import useAuth from "../hooks/use-auth";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function LoginForm({ onClick }) {
   const [input, setInput] = useState({ emailOrUserName: "", password: "" });
@@ -28,7 +29,7 @@ function LoginForm({ onClick }) {
       await login(input);
       toast.success("Login success fully");
       setInput({ emailOrUserName: "", password: "" });
-      to;
+      document.getElementById("my_modal_2").close();
     } catch (err) {
       toast.error(err.response?.data.message);
     }
@@ -72,6 +73,14 @@ function LoginForm({ onClick }) {
           <button onClick={onClick} className="text-blue-500">
             Sign Up
           </button>
+          <div className="text-center pt-4 text-blue-500">
+            <Link
+              to="/homepage"
+              onClick={() => document.getElementById("my_modal_2").close()}
+            >
+              Continue With Guest ?
+            </Link>
+          </div>
         </p>
       </div>
     </form>
