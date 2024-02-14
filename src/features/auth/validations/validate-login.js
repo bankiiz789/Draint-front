@@ -2,7 +2,7 @@ import validate from "../../../validator/validate";
 import Joi from "joi";
 
 const loginSchema = Joi.object({
-  emailOrUsername: Joi.string().required().messages({
+  emailOrUserName: Joi.string().required().messages({
     "string.empty": "Email or Username is required",
     "any.required": "Email or Username is required",
     "object.unknown": "Email or Username not founded",

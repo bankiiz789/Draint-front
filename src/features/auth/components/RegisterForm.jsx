@@ -17,8 +17,6 @@ function RegisterForm({ onClick }) {
   const [input, setInput] = useState(initial);
   const [errorRegis, setErrorRegis] = useState({});
 
-  console.log(errorRegis);
-
   const { register } = useAuth();
 
   const handleChangeInput = (e) => {

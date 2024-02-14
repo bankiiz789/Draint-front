@@ -3,20 +3,34 @@ import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import { useState } from "react";
 import validateLogin from "../validations/validate-login";
+import useAuth from "../hooks/use-auth";
+import { toast } from "react-toastify";
 
 function LoginForm({ onClick }) {
   const [input, setInput] = useState({ emailOrUserName: "", password: "" });
   const [errorLogin, setErrorLogin] = useState({});
 
+  //context
+  const { login } = useAuth();
+
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validateError = validateLogin(input);
-    if (validateError) {
-      return setErrorLogin(validateError);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const validateError = validateLogin(input);
+      if (validateError) {
+        return setErrorLogin(validateError);
+      }
+      console.log(input);
+      await login(input);
+      toast.success("Login success fully");
+      setInput({ emailOrUserName: "", password: "" });
+      to;
+    } catch (err) {
+      toast.error(err.response?.data.message);
     }
   };
   return (
@@ -34,7 +48,7 @@ function LoginForm({ onClick }) {
           placeholder="Enter your Email or Username"
           label="Email or Username"
           onChange={handleChangeInput}
-          name="emailOrUsername"
+          name="emailOrUserName"
           value={input.emailOrUserName}
           errorMessage={errorLogin.emailOrUserName}
         />

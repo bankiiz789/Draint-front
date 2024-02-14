@@ -8,7 +8,7 @@ function Modal({ children, title }) {
         className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none"
         onClick={() => document.getElementById("my_modal_2").showModal()}
       >
-        login
+        {title}
       </button>
       {/* form */}
       <dialog id="my_modal_2" className="modal">
