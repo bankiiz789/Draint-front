@@ -3,6 +3,8 @@ import Container from "../layout/Container";
 import HomePage from "../page/HomePage";
 import LandingPage from "../page/LandingPage";
 import RedirectIfAuthenticate from "../features/auth/components/RedirectIfAuthenticate";
+import ProfilePage from "../page/ProfilePage";
+import WritePage from "../page/WritePage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,9 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/homepage", element: <HomePage /> },
+      { path: "/profile", element: <ProfilePage /> },
+      { path: "/read", element: <ReadPage /> },
+      { path: "/write", element: <WritePage /> },
     ],
   },
 ]);

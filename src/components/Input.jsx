@@ -11,7 +11,7 @@ function Input({
 }) {
   const extendedClass = errorMessage
     ? "border-2 border-red-500 focus:ring-red-300 w-full"
-    : "border-1 focus:border-amber-500 focus:outline-amber-500 border-amber-500 w-full";
+    : "border-2 focus:border-amber-500 focus:outline-amber-500 border-amber-500 w-full";
   return (
     <>
       <label className="form-control w-full max-w-xs mb-[1rem]">

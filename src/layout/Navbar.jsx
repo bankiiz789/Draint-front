@@ -5,6 +5,7 @@ import LoginForm from "../features/auth/components/LoginForm";
 import RegisterForm from "../features/auth/components/RegisterForm";
 import useAuth from "../features/auth/hooks/use-auth";
 import Input from "../components/Input";
+import Avatar from "../features/auth/components/Avatar";
 
 function Navbar() {
   const [toggleLoginToRegis, setToggleLoginToRegis] = useState(false);
@@ -20,16 +21,21 @@ function Navbar() {
     <>
       {authUser ? (
         // right side login success
-        <div className="navbar bg-base-100 shadow">
+        <div className="navbar bg-base-100 shadow min-h-[4rem] rounded-xl">
           <div className="flex-1">
             <a className="btn btn-ghost text-xl">Draint</a>
           </div>
           {/* left side */}
-          <div className="flex-none gap-2">
+          <div className="flex-none gap-4 px-4">
             {/* search */}
             <Input type="search" placeholder="Search..." />
-            <div>home</div>
-            <div>write</div>
+            <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white">
+              home
+            </div>
+            <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white">
+              write
+            </div>
+
             {/* dropdown */}
             <div className="dropdown dropdown-end">
               {/* avatar */}
@@ -38,28 +44,20 @@ function Navbar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  />
-                </div>
+                <Avatar />
               </div>
               {/* list in dropdown */}
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
               >
-                <li>
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
+                <li className="hover:bg-amber-400 hover:text-white rounded-lg">
+                  <a>Profile</a>
                 </li>
-                <li>
+                <li className="hover:bg-amber-400 hover:text-white rounded-lg">
                   <a>Settings</a>
                 </li>
-                <li>
+                <li className="hover:bg-amber-400 hover:text-white rounded-lg">
                   <a onClick={logout}>Logout</a>
                 </li>
               </ul>
