@@ -5,6 +5,7 @@ import LandingPage from "../page/LandingPage";
 import RedirectIfAuthenticate from "../features/auth/components/RedirectIfAuthenticate";
 import ProfilePage from "../page/ProfilePage";
 import WritePage from "../page/WritePage";
+import ReadPage from "../page/ReadPage";
 
 const router = createBrowserRouter([
   {

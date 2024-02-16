@@ -3,8 +3,8 @@ import Avatar from "../../auth/components/Avatar";
 
 function StoryCards() {
   return (
-    <div className="card w-full bg-base-100 shadow-xl h-[450px] my-8">
-      <figure className="bg-amber-400">
+    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8">
+      <figure className="bg-amber-400 h-[500px]">
         <img
           src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
           alt="Shoes"
@@ -32,11 +32,11 @@ function StoryCards() {
         <div className="flex justify-between items-center">
           <div>
             <div className="flex gap-2 items-center">
-              <Avatar size={10} />
+              <Avatar size="w-10" />
               <div>username</div>
               <div>premium icon</div>
             </div>
-            <div className="text-gray-500 font-black ps-2">1hr</div>
+            <div className="text-gray-500 font-bold ps-2 pt-2">1hr</div>
           </div>
           <div>30 recommended</div>
         </div>
