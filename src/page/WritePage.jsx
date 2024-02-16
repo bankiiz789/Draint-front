@@ -11,6 +11,17 @@ const modules = {
   ],
 };
 
+const initial = {
+  id: "",
+  userId: "",
+  title: "",
+  content: "",
+  category: "",
+  totalFav: "",
+  totalComment: "",
+  coverImg: "",
+};
+
 function WritePage() {
   const [value, setValue] = useState();
   return (
@@ -48,8 +59,9 @@ function WritePage() {
           </select>
           <select className="select select-bordered select-xs w-full max-w-[100px]">
             <option disabled selected>
-              Everyone
+              for ?
             </option>
+            <option>Everyone</option>
             <option>Member</option>
           </select>
         </div>
@@ -75,7 +87,7 @@ function WritePage() {
         </div>
       </form>
 
-      {/* <div> preview : {value}</div> */}
+      <div> preview : {value}</div>
     </>
   );
 }

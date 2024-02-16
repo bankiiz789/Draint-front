@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "title": "Hello world",
+    "content": "this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post this is mock data test for test render post ",
+    "category": "inspire",
+    "totalFav": 3,
+    "totalComment": 4,
+    "coverImg": "https://images.unsplash.com/photo-1707779734349-ef2bba17dfdb?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "createdAt": "",
+    "staffPick": false,
+    "isDelete": false,
+    "member": false
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "title": "Hello world",
+    "content": "this is mock data test for test render post",
+    "category": "inspire",
+    "totalFav": 3,
+    "totalComment": 4,
+    "coverImg": "https://images.unsplash.com/photo-1707779734349-ef2bba17dfdb?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "createdAt": "",
+    "staffPick": false,
+    "isDelete": false,
+    "member": false
+  },
+  {
+    "id": 3,
+    "userId": 1,
+    "title": "Hello world",
+    "content": "this is mock data test for test render post",
+    "category": "inspire",
+    "totalFav": 3,
+    "totalComment": 4,
+    "coverImg": "https://images.unsplash.com/photo-1707779734349-ef2bba17dfdb?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "createdAt": "",
+    "staffPick": false,
+    "isDelete": false,
+    "member": false
+  }
+]

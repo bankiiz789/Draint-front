@@ -1,6 +1,7 @@
 import React from "react";
 import StoryCards from "../features/story/components/StoryCards";
 import Footer from "../components/Footer";
+import StoryContextProvider from "../features/story/context/StoryContext";
 
 function HomePage() {
   return (
@@ -10,10 +11,9 @@ function HomePage() {
       </div>
       {/* content */}
 
-      <StoryCards />
-      <StoryCards />
-      <StoryCards />
-      <StoryCards />
+      <StoryContextProvider>
+        <StoryCards />
+      </StoryContextProvider>
 
       {/* footer */}
       <Footer />
