@@ -7,6 +7,7 @@ import useAuth from "../features/auth/hooks/use-auth";
 import Input from "../components/Input";
 import Avatar from "../features/auth/components/Avatar";
 import { Link } from "react-router-dom";
+import { HomeIcon, WriteIcon } from "../icons/index.jsx";
 
 function Navbar() {
   const [toggleLoginToRegis, setToggleLoginToRegis] = useState(false);
@@ -27,17 +28,17 @@ function Navbar() {
             <a className="btn btn-ghost text-xl">Draint</a>
           </div>
           {/* right side */}
-          <div className="flex-none gap-2 px-4">
+          <div className="flex-none gap-1 px-2">
             {/* search */}
             <Input type="search" placeholder="Search..." />
             <Link to="/homepage">
-              <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white">
-                home
+              <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
+                <HomeIcon className="group-hover:fill-white fill-amber-500" />
               </div>
             </Link>
             <Link to="/write">
-              <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white">
-                write
+              <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
+                <WriteIcon className="group-hover:fill-white fill-amber-500" />
               </div>
             </Link>
 

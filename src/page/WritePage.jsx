@@ -20,13 +20,24 @@ const initial = {
   totalFav: "",
   totalComment: "",
   coverImg: "",
+  member: "",
 };
 
 function WritePage() {
   const [value, setValue] = useState();
+  const [input, setInput] = useState(initial);
+
+  const handleChangeInput = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ ...input, content: value });
+  };
   return (
     <>
-      <form className="flex flex-col gap-4 my-4">
+      <form className="flex flex-col gap-4 my-4" onSubmit={handleSubmit}>
         {/* close button */}
         <div className="text-red-500 self-end text-l btn bg-white hover:bg-red-500 hover:text-white border-none rounded-full shadow-none">
           close x
@@ -41,11 +52,19 @@ function WritePage() {
             type="text"
             placeholder="Title..."
             className="input input-bordered w-full  border-none outline-none focus:outline-none placeholder:text-2xl placeholder:font-bold text-2xl font-bold"
+            name="title"
+            value={input.title}
+            onChange={handleChangeInput}
           />
         </div>
         {/* Category */}
         <div className="flex gap-2">
-          <select className="select select-bordered select-xs w-full max-w-[100px]">
+          <select
+            className="select select-bordered select-xs w-full max-w-[100px]"
+            name="category"
+            value={input.category}
+            onChange={handleChangeInput}
+          >
             <option disabled selected>
               Category
             </option>
@@ -57,7 +76,12 @@ function WritePage() {
             <option>GLOBAL</option>
             <option>KNOWLEDGE</option>
           </select>
-          <select className="select select-bordered select-xs w-full max-w-[100px]">
+          <select
+            className="select select-bordered select-xs w-full max-w-[100px] "
+            name="member"
+            value={input.member}
+            onChange={handleChangeInput}
+          >
             <option disabled selected>
               for ?
             </option>
@@ -71,17 +95,23 @@ function WritePage() {
             className="rounded-lg"
             theme="snow"
             value={value}
-            onChange={setValue}
+            onChange={setValue} // (quillVal => setInput({...input , content: quillVal})
             modules={modules}
             style={{ height: 600 }}
           />
         </div>
         {/* Button save and create story */}
         <div className="self-end flex flex-row gap-4 mt-[3rem]">
-          <button className="btn bg-green-500 px-8 rounded-full text-white hover:bg-green-600">
+          <button
+            type="button"
+            className="btn bg-green-500 px-8 rounded-full text-white hover:bg-green-600"
+          >
             Save
           </button>
-          <button className="btn bg-amber-500 rounded-full text-white hover:bg-amber-600">
+          <button
+            type="submit"
+            className="btn bg-amber-500 rounded-full text-white hover:bg-amber-600"
+          >
             Create Story
           </button>
         </div>

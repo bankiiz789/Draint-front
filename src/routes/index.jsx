@@ -6,11 +6,17 @@ import RedirectIfAuthenticate from "../features/auth/components/RedirectIfAuthen
 import ProfilePage from "../page/ProfilePage";
 import WritePage from "../page/WritePage";
 import ReadPage from "../page/ReadPage";
+import StoryContextProvider from "../features/story/context/StoryContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Container />,
+    element: (
+      <StoryContextProvider>
+        <Container />
+      </StoryContextProvider>
+    ),
+
     children: [
       {
         path: "/",

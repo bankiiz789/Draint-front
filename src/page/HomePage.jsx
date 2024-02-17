@@ -5,18 +5,20 @@ import StoryContextProvider from "../features/story/context/StoryContext";
 
 function HomePage() {
   return (
-    <div className=" max-w-[1000px] m-auto">
-      <div className="btn rounded-full mt-8 w-full border-4 border-amber-400 text-amber-500 bg-white hover:bg-amber-500 hover:text-white hover:border-none ">
-        Tell your Story
+    <div className="w-full bg-[#f2f2f4]">
+      <div className=" max-w-[1000px] m-auto">
+        <div className="btn rounded-full mt-8 w-full bg-amber-500 text-white hover:bg-amber-600  ">
+          Tell your Story
+        </div>
+        {/* content */}
+
+        <StoryContextProvider>
+          <StoryCards />
+        </StoryContextProvider>
+
+        {/* footer */}
+        <Footer />
       </div>
-      {/* content */}
-
-      <StoryContextProvider>
-        <StoryCards />
-      </StoryContextProvider>
-
-      {/* footer */}
-      <Footer />
     </div>
   );
 }

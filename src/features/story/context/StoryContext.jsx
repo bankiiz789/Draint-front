@@ -15,8 +15,9 @@ const initial = {
 };
 
 export default function StoryContextProvider({ children }) {
-  const [story, SetStory] = useState(mockData);
+  const [story, setStory] = useState(mockData);
 
+  //   const createPost = (input) => {};
   return (
     <StoryContext.Provider value={{ story }}>{children}</StoryContext.Provider>
   );

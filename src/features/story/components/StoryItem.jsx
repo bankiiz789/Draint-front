@@ -2,7 +2,8 @@ import React from "react";
 import Avatar from "../../auth/components/Avatar";
 
 function StoryItem({ story }) {
-  const { userId, title, content, coverImg, totalFav, category } = story;
+  const { title, content, coverImg, totalFav, category } = story;
+
   return (
     <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8">
       <figure className="bg-amber-400 ">

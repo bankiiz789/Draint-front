@@ -48,9 +48,6 @@ function ProfilePage() {
       </div>
       <div>
         <StoryCards />
-        <StoryCards />
-        <StoryCards />
-        <StoryCards />
       </div>
     </>
   );
