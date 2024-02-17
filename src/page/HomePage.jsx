@@ -17,8 +17,8 @@ function HomePage() {
         </StoryContextProvider>
 
         {/* footer */}
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }

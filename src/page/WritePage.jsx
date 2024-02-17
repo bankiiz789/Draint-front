@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import useStory from "../features/story/hooks/useStory";
+import { toast } from "react-toastify";
 
 const modules = {
   toolbar: [
@@ -12,13 +14,9 @@ const modules = {
 };
 
 const initial = {
-  id: "",
-  userId: "",
   title: "",
   content: "",
   category: "",
-  totalFav: "",
-  totalComment: "",
   coverImg: "",
   member: "",
 };
@@ -27,13 +25,28 @@ function WritePage() {
   const [value, setValue] = useState();
   const [input, setInput] = useState(initial);
 
+  const { createStory } = useStory();
+
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ ...input, content: value });
+  const handleSubmit = async (e) => {
+    try {
+      if (
+        (!input.title || input.title.trim() == "") &&
+        (value || value.trim == "")
+      ) {
+        toast.error("please fill your title and content before post");
+      }
+      e.preventDefault();
+      setInput({ ...input, content: value });
+      await createStory(input);
+      toast.success("create story successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data.message);
+    }
   };
   return (
     <>

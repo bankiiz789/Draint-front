@@ -23,7 +23,7 @@ function Navbar() {
     <>
       {authUser ? (
         // left side login success
-        <div className="navbar bg-base-100 shadow min-h-[4rem] rounded-xl">
+        <div className="navbar bg-base-100 shadow min-h-[4rem] rounded-xl gap-1">
           <div className="flex-1">
             <a className="btn btn-ghost text-xl">Draint</a>
           </div>

@@ -1,10 +1,11 @@
 import { createContext, useState } from "react";
 import mockData from "../mock.json";
+import * as StoryApi from "../../../api/story-api";
+import { useEffect } from "react";
 
 export const StoryContext = createContext();
 
 const initial = {
-  id: "",
   userId: "",
   title: "",
   content: "",
@@ -15,10 +16,25 @@ const initial = {
 };
 
 export default function StoryContextProvider({ children }) {
-  const [story, setStory] = useState(mockData);
+  const [story, setStory] = useState([]);
+
+  useEffect(() => {
+    StoryApi.getAllStory()
+      .then((res) => {
+        setStory(res.data.story);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const createStory = async (formData) => {
+    await StoryApi.createStory(formData);
+  };
 
   //   const createPost = (input) => {};
   return (
-    <StoryContext.Provider value={{ story }}>{children}</StoryContext.Provider>
+    <StoryContext.Provider value={{ story, createStory }}>
+      {children}
+    </StoryContext.Provider>
   );
 }

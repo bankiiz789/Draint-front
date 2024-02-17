@@ -5,7 +5,7 @@ import useStory from "../hooks/useStory";
 
 function StoryCards() {
   const { story } = useStory();
-  console.log(story);
+
   return (
     <div>
       {story.map((el) => (

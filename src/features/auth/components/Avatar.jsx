@@ -1,13 +1,11 @@
 import React from "react";
+import defaultPic from "../../../assets/picture-default.png";
 
 function Avatar({ size }) {
   return (
     <div className="avatar">
       <div className={`${size} rounded-full`}>
-        <img
-          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-          alt="user"
-        />
+        <img src={defaultPic} />
       </div>
     </div>
   );
