@@ -8,12 +8,15 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
 
+  console.log(authUser);
+
   //get token
   useEffect(() => {
     if (getToken()) {
       authApi
         .fetchMe()
         .then((res) => {
+          console.log(res.data.user);
           setAuthUser(res.data.user);
         })
         .catch((err) => {

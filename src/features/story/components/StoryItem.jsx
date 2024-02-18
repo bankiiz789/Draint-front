@@ -16,11 +16,11 @@ function StoryItem({ story }) {
     coverImg,
     totalFav,
     category,
-    user: { userName },
+    user: { userName, profileImage },
   } = story;
 
   return (
-    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8">
+    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8 cursor-pointer hover:scale-105">
       <figure className="bg-amber-400 ">
         {coverImg ? (
           <img src={coverImg} alt="Shoes" />
@@ -74,7 +74,7 @@ function StoryItem({ story }) {
         <div className="flex justify-between items-center">
           <div>
             <div className="flex gap-2 items-center">
-              <Avatar size="w-10" />
+              <Avatar size="w-10" src={profileImage} />
               <div>{userName}</div>
               <div>
                 <CrownIcon />

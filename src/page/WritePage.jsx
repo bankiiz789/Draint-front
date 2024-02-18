@@ -39,9 +39,10 @@ function WritePage() {
       ) {
         toast.error("please fill your title and content before post");
       }
+      console.log({ ...input, content: value });
       e.preventDefault();
       setInput({ ...input, content: value });
-      await createStory(input);
+      await createStory({ ...input, content: value });
       toast.success("create story successfully");
     } catch (err) {
       console.log(err);

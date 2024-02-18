@@ -50,7 +50,7 @@ function Navbar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <Avatar />
+                <Avatar src={authUser.profileImage} />
               </div>
               {/* list in dropdown */}
               <ul
@@ -80,7 +80,10 @@ function Navbar() {
             <a className="btn btn-ghost text-xl">Draint</a>
           </div>
           <div className="navbar-end">
-            <Modal title="Login">
+            <Modal
+              title="Login"
+              className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
+            >
               {!toggleLoginToRegis ? (
                 <LoginForm onClick={handleToggleLoginToRegis} />
               ) : (

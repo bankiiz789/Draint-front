@@ -14,7 +14,7 @@ function Input({
     : "border-2 focus:border-amber-500 focus:outline-amber-500 border-amber-500 w-full";
   return (
     <>
-      <label className="form-control w-full max-w-xs mb-[1rem]">
+      <label className="form-control w-full mix-w-xs mb-[1rem]">
         <div className="label">
           <span className="label-text">{label}</span>
         </div>
@@ -25,7 +25,7 @@ function Input({
           placeholder={placeholder}
           className={`input input-bordered ${extendedClass}  w-full min-w-l placeholder:text-xs`}
           onChange={onChange}
-        />
+        ></input>
       </label>
       <div>
         {errorMessage ? (

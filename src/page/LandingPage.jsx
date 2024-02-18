@@ -22,7 +22,10 @@ function LandingPage() {
             because Life is story ,Let's tell us
           </p>
 
-          <Modal title="Create your Own">
+          <Modal
+            title="Create your Own"
+            className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
+          >
             <LoginForm />
           </Modal>
         </div>

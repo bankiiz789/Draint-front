@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       { path: "/homepage", element: <HomePage /> },
       { path: "/profile", element: <ProfilePage /> },
-      { path: "/read", element: <ReadPage /> },
+      { path: "/read/:storyId", element: <ReadPage /> },
       { path: "/write", element: <WritePage /> },
     ],
   },

@@ -1,11 +1,11 @@
 import React from "react";
 
-function Modal({ children, title }) {
+function Modal({ children, title, className }) {
   return (
     <>
       {/* ปุ่ม open modal */}
       <button
-        className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
+        className={className}
         onClick={() => document.getElementById("my_modal_2").showModal()}
       >
         {title}

@@ -28,6 +28,7 @@ export default function StoryContextProvider({ children }) {
   }, []);
 
   const createStory = async (formData) => {
+    console.log(formData);
     await StoryApi.createStory(formData);
   };
 
