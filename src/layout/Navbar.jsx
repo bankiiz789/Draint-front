@@ -50,7 +50,7 @@ function Navbar() {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <Avatar src={authUser.profileImage} />
+                <Avatar src={authUser?.profileImage} />
               </div>
               {/* list in dropdown */}
               <ul

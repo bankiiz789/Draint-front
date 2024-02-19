@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import * as authApi from "../../../api/auth-api";
+import * as userApi from "../../../api/user-api";
 import { storeToken } from "../../../utils/local-storage";
 import { getToken, clearToken } from "../../../utils/local-storage";
 
@@ -14,7 +15,7 @@ export default function AuthContextProvider({ children }) {
   useEffect(() => {
     if (getToken()) {
       authApi
-        .fetchMe()
+        .fetchAllStory()
         .then((res) => {
           console.log(res.data.user);
           setAuthUser(res.data.user);
@@ -41,6 +42,11 @@ export default function AuthContextProvider({ children }) {
   const logout = () => {
     setAuthUser(null);
     clearToken();
+  };
+
+  const updateUser = async (user) => {
+    const res = await authApi.updateUser(user);
+    setAuthUser((prev) => ({ ...prev, ...res.data }));
   };
 
   return (
