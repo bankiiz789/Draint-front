@@ -11,25 +11,12 @@ function EditProfileForm() {
   const profileEl = useRef(null);
   const coverEl = useRef(null);
   const [image, setImage] = useState();
-  const [coverImage, setCoverImage] = useState();
+  const [coverImage, setCoverImage] = useState("");
   const [editUser, setEditUser] = useState("");
 
   const handleChangeEdit = (e) => {
     setEditUser({ ...editUser, [e.target.name]: e.target.value });
   };
-
-  //   const updateProfileImage = async (file) => {
-  //     // console.log(file);
-  //     const formData = new FormData();
-  //     formData.append("profileImage", file);
-  //     await updateUser(formData);
-  //   };
-
-  //   const updateCoverImage = async (file) => {
-  //     const formData = new FormData();
-  //     formData.append("coverImage", file);
-  //     await updateUser(formData);
-  //   };
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
@@ -38,7 +25,6 @@ function EditProfileForm() {
     if (image) {
       formData.append("profileImage", image);
     }
-    // await updateUser(formData);
     if (coverImage) {
       formData.append("coverImage", coverImage);
     }
@@ -48,6 +34,8 @@ function EditProfileForm() {
     if (editUser.bio) {
       formData.append("bio", editUser?.bio);
     }
+
+    console.log(formData, "'''''''''''''''''''");
 
     await updateUser(formData);
   };

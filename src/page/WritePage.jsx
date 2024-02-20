@@ -4,7 +4,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useStory from "../features/story/hooks/useStory";
 import { toast } from "react-toastify";
-
+import { useRef } from "react";
+import * as StoryApi from "../api/story-api";
 const modules = {
   toolbar: [
     [{ header: [false, 1, 2, 3, 4] }],
@@ -24,8 +25,10 @@ const initial = {
 function WritePage() {
   const [value, setValue] = useState();
   const [input, setInput] = useState(initial);
+  const [coverImage, setCoverImage] = useState("");
 
   const { createStory } = useStory();
+  const coverEl = useRef(null);
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -33,16 +36,34 @@ function WritePage() {
 
   const handleSubmit = async (e) => {
     try {
+      e.preventDefault();
       if (
         (!input.title || input.title.trim() == "") &&
         (value || value.trim == "")
       ) {
         toast.error("please fill your title and content before post");
       }
-      console.log({ ...input, content: value });
-      e.preventDefault();
       setInput({ ...input, content: value });
-      await createStory({ ...input, content: value });
+
+      const formData = new FormData();
+      if (coverImage) {
+        formData.append("coverImage", coverImage);
+      }
+      if (input.title) {
+        formData.append("title", input.title);
+      }
+      if (value) {
+        formData.append("content", value);
+      }
+      if (input.category) {
+        formData.append("category", input?.category);
+      }
+      if (input.member) {
+        formData.append("member", input?.member);
+      }
+      // await StoryApi.createStory(formData);
+      //   await createStory({ ...input, content: value });
+      await createStory(formData);
       toast.success("create story successfully");
     } catch (err) {
       console.log(err);
@@ -57,8 +78,25 @@ function WritePage() {
           close x
         </div>
         {/* Cover Image */}
-        <div className="border-2 border-dashed border-amber-500 h-[160px]">
-          <img src="" alt="" />
+        <input
+          className="hidden"
+          type="file"
+          ref={coverEl}
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              setCoverImage(e.target.files[0]);
+            }
+          }}
+        />
+        <div
+          className="border-2 border-dashed border-amber-500 h-[160px] cursor-pointer"
+          onClick={() => coverEl.current.click()}
+        >
+          <img
+            className="w-full bg-center h-full bg-contain"
+            src={coverImage ? URL.createObjectURL(coverImage) : null}
+            alt=""
+          />
         </div>
         {/* Title */}
         <div className="w-full border-b-2 border-black">
@@ -130,8 +168,6 @@ function WritePage() {
           </button>
         </div>
       </form>
-
-      <div> preview : {value}</div>
     </>
   );
 }

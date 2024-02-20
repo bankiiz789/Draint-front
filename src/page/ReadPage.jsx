@@ -1,7 +1,8 @@
 import React from "react";
+import Read from "../features/story/components/Read";
 
 function ReadPage() {
-  return <div>ReadPage</div>;
+  return <Read />;
 }
 
 export default ReadPage;

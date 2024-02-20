@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 import mockData from "../mock.json";
 import * as StoryApi from "../../../api/story-api";
 import { useEffect } from "react";
+import * as FavApi from "../../../api/favorite-api";
+import { useParams } from "react-router-dom";
 
 export const StoryContext = createContext();
 
@@ -22,7 +24,6 @@ export default function StoryContextProvider({ children }) {
     StoryApi.getAllStory()
       .then((res) => {
         setStory(res.data.story);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -32,9 +33,13 @@ export default function StoryContextProvider({ children }) {
     await StoryApi.createStory(formData);
   };
 
+  const toggleFav = async (storyId) => {
+    await FavApi.toggleFav(storyId);
+  };
+
   //   const createPost = (input) => {};
   return (
-    <StoryContext.Provider value={{ story, createStory }}>
+    <StoryContext.Provider value={{ story, createStory, toggleFav }}>
       {children}
     </StoryContext.Provider>
   );

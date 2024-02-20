@@ -1,19 +1,22 @@
 import React from "react";
 import useAuth from "../../auth/hooks/use-auth";
+import useProfile from "../hooks/useProfile";
 
 function ProfileInfo() {
   const { authUser } = useAuth();
+  const { profileUserFriend } = useProfile();
+
   return (
     <div className="flex flex-col items-center mt-2">
-      <h1>{authUser?.userName}</h1>
-      <p>Bio : {authUser?.bio}</p>
+      <h1>{profileUserFriend?.userName}</h1>
+      <p>Bio : {profileUserFriend?.bio}</p>
       <div className="flex flex-row gap-8 justify-center">
         <div className="text-center">
-          <h2>80</h2>
+          <h2>{profileUserFriend.Stories?.length}</h2>
           <p>Stories</p>
         </div>
         <div className="text-center">
-          <h2>120</h2>
+          <h2>10</h2>
           <p>Follower</p>
         </div>
         <div className="text-center">

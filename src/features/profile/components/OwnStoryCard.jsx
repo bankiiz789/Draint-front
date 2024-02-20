@@ -3,11 +3,15 @@ import useProfile from "../hooks/useProfile";
 import OwnStoryItem from "./OwnStoryItem";
 
 function OwnStoryCard() {
-  const { myStory } = useProfile();
+  const { profileUserFriend } = useProfile();
   return (
     <div>
-      {myStory.map((el) => (
-        <OwnStoryItem key={el.id} myStory={el}></OwnStoryItem>
+      {profileUserFriend.Stories?.map((el) => (
+        <OwnStoryItem
+          key={el.id}
+          info={profileUserFriend}
+          story={el}
+        ></OwnStoryItem>
       ))}
     </div>
   );
