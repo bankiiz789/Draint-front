@@ -2,11 +2,21 @@ import React from "react";
 import Avatar from "../../auth/components/Avatar";
 import CommentForm from "./CommentForm";
 
-function CommentContainer() {
+function CommentContainer({
+  createComment,
+  comment,
+  storyId,
+  fetchGetTargetStory,
+}) {
   return (
     <>
       <div>
-        <CommentForm />
+        <CommentForm
+          createComment={createComment}
+          comment={comment}
+          storyId={storyId}
+          fetchGetTargetStory={fetchGetTargetStory}
+        />
       </div>
     </>
   );

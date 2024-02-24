@@ -17,7 +17,6 @@ export default function AuthContextProvider({ children }) {
       authApi
         .fetchAllStory()
         .then((res) => {
-          console.log(res.data.user);
           setAuthUser(res.data.user);
         })
         .catch((err) => {

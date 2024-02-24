@@ -1,34 +1,60 @@
 import React from "react";
 import Avatar from "../../auth/components/Avatar";
 import Input from "../../../components/Input";
+import CommentList from "./CommentList";
+import useAuth from "../../auth/hooks/use-auth";
+import { useState } from "react";
+import Spinner from "../../../components/Spinner";
 
-function CommentForm() {
+function CommentForm({ createComment, comment, storyId, fetchGetTargetStory }) {
+  const { authUser } = useAuth();
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChangeComment = (e) => {
+    setContent(e.target.value);
+  };
+  const handleSubmitComment = async (e) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      await createComment({ storyId: storyId, content: content });
+      await fetchGetTargetStory();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className="flex flex-col gap-4">
-      {/* header comment */}
-      <div className="w-full text-center bg-green-500 text-white p-4">
-        comment
-      </div>
-      {/* comment box */}
-      <div className="flex items-center gap-2 border">
-        <div className="flex flex-col gap-1 justify-center p-4">
-          <div className="flex flex-row items-center gap-2 ">
-            <Avatar size="w-10" />
-            <div> name </div>
+    <>
+      {loading && <Spinner />}
+      <form className="flex flex-col gap-4" onSubmit={handleSubmitComment}>
+        {/* header comment */}
+        <div className="w-full text-center bg-green-500 text-white p-4">
+          comment
+        </div>
+        {/* comment box */}
+        {comment?.Comments.length > 0
+          ? comment?.Comments.map((el) => <CommentList key={el.id} data={el} />)
+          : null}
+        {/* end comment box */}
+        <div className="flex flex-row items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Avatar size="w-10" src={authUser?.profileImage} />
+            <h1>{authUser?.userName}</h1>
           </div>
-          <div className="ps-2">1hr</div>
+          <Input
+            onChange={handleChangeComment}
+            name="content"
+            value={content}
+          />
+          <button type="submit" className="btn">
+            send
+          </button>
         </div>
-        <div> good story bro</div>
-      </div>
-      <div className="flex flex-row items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Avatar size="w-10" />
-          <h1>name</h1>
-        </div>
-        <Input />
-        <div className="btn">send</div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

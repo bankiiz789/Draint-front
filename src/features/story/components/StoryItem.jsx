@@ -10,6 +10,7 @@ import {
 } from "../../../icons/index";
 import coverPhotoDefault from "../../../assets/cover-photo.png";
 import { Link } from "react-router-dom";
+import formatTimeAgo from "../../../utils/time-ago";
 
 function StoryItem({ story }) {
   const {
@@ -19,14 +20,15 @@ function StoryItem({ story }) {
     coverImage,
     totalFav,
     category,
+    createdAt,
 
-    user: { userName, profileImage, id },
+    user: { userName, profileImage, id, type },
   } = story;
 
   //   console.log(story);
 
   return (
-    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8 cursor-pointer hover:scale-105">
+    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8 cursor-pointer hover:scale-105 transition duration-500">
       <figure className="bg-amber-400 ">
         <img src={coverImage || coverPhotoDefault}></img>
       </figure>
@@ -41,7 +43,7 @@ function StoryItem({ story }) {
           <div className="flex items-center gap-2 ">
             <h2 className="card-title font-black text-2xl">{title}</h2>
             <h2 className="btn btn-ghost">
-              <LockIcon />
+              {story.type === "PREMIUM" ? <LockIcon /> : null}
             </h2>
           </div>
         </div>
@@ -57,11 +59,11 @@ function StoryItem({ story }) {
                 <Avatar size="w-10" src={profileImage} />
               </Link>
               <div>{userName}</div>
-              <div>
-                <CrownIcon />
-              </div>
+              <div>{type === "PREMIUM" ? <CrownIcon /> : null}</div>
             </div>
-            <div className="text-gray-500 font-bold ps-2 pt-2">1hr</div>
+            <div className="text-gray-500 font-bold ps-2 pt-2">
+              {formatTimeAgo(createdAt)}
+            </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
             <div>

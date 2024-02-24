@@ -7,3 +7,5 @@ export const getAllStory = () => axios.get("/story/all");
 export const deleteStory = (id) => axios.delete(`/story/delete/${id}`);
 
 export const getTargetStory = (storyId) => axios.get(`/story/${storyId}`);
+
+export const updateStory = (data) => axios.patch("/story/update", data);

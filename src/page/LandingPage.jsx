@@ -23,6 +23,7 @@ function LandingPage() {
           </p>
 
           <Modal
+            id="login"
             title="Create your Own"
             className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
           >

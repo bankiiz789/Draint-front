@@ -4,10 +4,9 @@ import { useState } from "react";
 import LoginForm from "../features/auth/components/LoginForm";
 import RegisterForm from "../features/auth/components/RegisterForm";
 import useAuth from "../features/auth/hooks/use-auth";
-import Input from "../components/Input";
 import Avatar from "../features/auth/components/Avatar";
 import { Link } from "react-router-dom";
-import { HomeIcon, WriteIcon } from "../icons/index.jsx";
+import { HomeIcon, StaffIcon, WriteIcon } from "../icons/index.jsx";
 
 function Navbar() {
   const [toggleLoginToRegis, setToggleLoginToRegis] = useState(false);
@@ -28,9 +27,8 @@ function Navbar() {
             <a className="btn btn-ghost text-xl">Draint</a>
           </div>
           {/* right side */}
-          <div className="flex-none gap-1 px-2">
+          <div className="flex-none gap-2 px-2">
             {/* search */}
-            <Input type="search" placeholder="Search..." />
             <Link to="/homepage">
               <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
                 <HomeIcon className="group-hover:fill-white fill-amber-500" />
@@ -39,6 +37,12 @@ function Navbar() {
             <Link to="/write">
               <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
                 <WriteIcon className="group-hover:fill-white fill-amber-500" />
+              </div>
+            </Link>
+
+            <Link to="/tranfer">
+              <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
+                <StaffIcon className="group-hover:fill-white fill-amber-500" />
               </div>
             </Link>
 
@@ -61,9 +65,6 @@ function Navbar() {
                   <Link to={`/profile/${authUser?.id}`}>Profile</Link>
                 </li>
                 <li className="hover:bg-amber-400 hover:text-white rounded-lg">
-                  <a>Settings</a>
-                </li>
-                <li className="hover:bg-amber-400 hover:text-white rounded-lg">
                   {/* <a onClick={logout} >Logout</a> */}
                   <Link onClick={logout} to="/">
                     logout
@@ -81,6 +82,7 @@ function Navbar() {
           </div>
           <div className="navbar-end">
             <Modal
+              id="login"
               title="Login"
               className="btn bg-white border-2 border-amber-500 hover:bg-amber-500 hover:text-white outline-none rounded-full"
             >

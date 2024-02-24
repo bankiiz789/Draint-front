@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
-import mockData from "../mock.json";
 import * as StoryApi from "../../../api/story-api";
 import { useEffect } from "react";
 import * as FavApi from "../../../api/favorite-api";
-import { useParams } from "react-router-dom";
+import * as CommentApi from "../../../api/comment-api";
+import * as StaffPickApi from "../../../api/staff-api";
 
 export const StoryContext = createContext();
 
@@ -33,13 +33,38 @@ export default function StoryContextProvider({ children }) {
     await StoryApi.createStory(formData);
   };
 
-  const toggleFav = async (storyId) => {
-    await FavApi.toggleFav(storyId);
+  const createFav = async (storyId) => {
+    await FavApi.createFav(storyId);
+  };
+  const deleteFav = async (storyId) => {
+    await FavApi.deleteFav(storyId);
   };
 
+  const createComment = async (data) => {
+    await CommentApi.createComment(data);
+  };
+
+  const updateStory = async (data) => {
+    await StoryApi.updateStory(data);
+  };
+
+  const staffPick = async (data) => {
+    await StaffPickApi.staffPick(data);
+  };
   //   const createPost = (input) => {};
   return (
-    <StoryContext.Provider value={{ story, createStory, toggleFav }}>
+    <StoryContext.Provider
+      value={{
+        story,
+        createStory,
+        createFav,
+        deleteFav,
+        createComment,
+        updateStory,
+        setStory,
+        staffPick,
+      }}
+    >
       {children}
     </StoryContext.Provider>
   );

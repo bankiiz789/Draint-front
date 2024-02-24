@@ -1,3 +1,4 @@
 import axios from "../config/axios";
 
-export const toggleFav = (storyId) => axios.post(`/story/${storyId}/fav`);
+export const createFav = (storyId) => axios.post(`/story/${storyId}/fav`);
+export const deleteFav = (storyId) => axios.delete(`/story/${storyId}/fav`);

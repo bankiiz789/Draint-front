@@ -5,7 +5,14 @@ import "react-quill/dist/quill.snow.css";
 import useStory from "../features/story/hooks/useStory";
 import { toast } from "react-toastify";
 import { useRef } from "react";
-import * as StoryApi from "../api/story-api";
+import * as DraftApi from "../api/draft-api";
+
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import useDraft from "../features/draft/hooks/useDraft";
+import useAuth from "../features/auth/hooks/use-auth";
+import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
 const modules = {
   toolbar: [
     [{ header: [false, 1, 2, 3, 4] }],
@@ -14,18 +21,42 @@ const modules = {
   ],
 };
 
-const initial = {
-  title: "",
-  content: "",
-  category: "",
-  coverImg: "",
-  member: "",
-};
-
 function WritePage() {
-  const [value, setValue] = useState();
-  const [input, setInput] = useState(initial);
+  const navigate = useNavigate();
+  const { authUser } = useAuth();
+  const { draftId } = useParams();
+  const { createDraft, fetchDraft, updateDraft, deleteDraft } = useDraft();
+
+  const [value, setValue] = useState("");
+  const [input, setInput] = useState({
+    title: "",
+    content: "",
+    category: "",
+    coverImg: "",
+    type: "",
+  });
   const [coverImage, setCoverImage] = useState("");
+  const [draft, setDraft] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function fetchTargetDraft() {
+    DraftApi.getTargetDraft(draftId)
+      .then((res) => {
+        setDraft(res.data.targetDraft);
+        setInput(res.data.targetDraft);
+        setValue(res.data.targetDraft.content);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    fetchTargetDraft();
+    return () => {
+      setDraft("");
+    };
+  }, [draftId]);
+
+  console.log(draft);
 
   const { createStory } = useStory();
   const coverEl = useRef(null);
@@ -37,13 +68,13 @@ function WritePage() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       if (
         (!input.title || input.title.trim() == "") &&
-        (value || value.trim == "")
+        (input.content || input.content.trim == "")
       ) {
         toast.error("please fill your title and content before post");
       }
-      setInput({ ...input, content: value });
 
       const formData = new FormData();
       if (coverImage) {
@@ -58,20 +89,87 @@ function WritePage() {
       if (input.category) {
         formData.append("category", input?.category);
       }
-      if (input.member) {
-        formData.append("member", input?.member);
+      if (input.type) {
+        formData.append("type", input?.type);
       }
-      // await StoryApi.createStory(formData);
-      //   await createStory({ ...input, content: value });
+
       await createStory(formData);
+      await deleteDraft(draft?.id);
+      fetchDraft();
       toast.success("create story successfully");
+      setInput({
+        title: "",
+        content: "",
+        category: "",
+        coverImg: "",
+        type: "",
+      });
+      setCoverImage("");
+      setValue("");
+      // navigate(`/profile/${authUser?.id}`);
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveDraft = async (e) => {
+    try {
+      setLoading(true);
+
+      if (
+        (!input.title || input.title.trim() == "") &&
+        (input.content || input.content.trim == "")
+      ) {
+        toast.error("please fill your title and content before post");
+      }
+
+      const formData = new FormData();
+
+      if (draft?.id) {
+        formData.append("draftId", draft.id);
+      }
+
+      if (coverImage) {
+        formData.append("coverImage", coverImage);
+      }
+      if (input.title) {
+        formData.append("title", input.title);
+      }
+      if (value) {
+        formData.append("content", value);
+      }
+      if (input.category) {
+        formData.append("category", input.category);
+      }
+      if (input.type) {
+        formData.append("type", input.type);
+      }
+
+      if (draft == "" || +draftId !== draft?.id) {
+        await createDraft(formData);
+      } else if (draft?.id === +draftId) {
+        await updateDraft(formData);
+      }
+
+      // if (draftId == draft.id) {
+      //   await updateDraft(+draftId, formData);
+      // }
+
+      await fetchDraft();
+      toast.success("save successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <>
+      {loading && <Spinner />}
       <form className="flex flex-col gap-4 my-4" onSubmit={handleSubmit}>
         {/* close button */}
         <div className="text-red-500 self-end text-l btn bg-white hover:bg-red-500 hover:text-white border-none rounded-full shadow-none">
@@ -92,11 +190,21 @@ function WritePage() {
           className="border-2 border-dashed border-amber-500 h-[160px] cursor-pointer"
           onClick={() => coverEl.current.click()}
         >
-          <img
-            className="w-full bg-center h-full bg-contain"
-            src={coverImage ? URL.createObjectURL(coverImage) : null}
-            alt=""
-          />
+          {draft ? (
+            <img
+              className="w-full bg-center h-full bg-contain"
+              src={
+                coverImage ? URL.createObjectURL(coverImage) : draft?.coverImage
+              }
+              alt=""
+            />
+          ) : (
+            <img
+              className="w-full bg-center h-full bg-contain"
+              src={coverImage ? URL.createObjectURL(coverImage) : null}
+              alt=""
+            />
+          )}
         </div>
         {/* Title */}
         <div className="w-full border-b-2 border-black">
@@ -105,7 +213,8 @@ function WritePage() {
             placeholder="Title..."
             className="input input-bordered w-full  border-none outline-none focus:outline-none placeholder:text-2xl placeholder:font-bold text-2xl font-bold"
             name="title"
-            value={input.title}
+            // value={draft.title || input.title}
+            value={input?.title}
             onChange={handleChangeInput}
           />
         </div>
@@ -114,7 +223,7 @@ function WritePage() {
           <select
             className="select select-bordered select-xs w-full max-w-[100px]"
             name="category"
-            value={input.category}
+            value={input?.category}
             onChange={handleChangeInput}
           >
             <option disabled selected>
@@ -128,18 +237,20 @@ function WritePage() {
             <option>GLOBAL</option>
             <option>KNOWLEDGE</option>
           </select>
-          <select
-            className="select select-bordered select-xs w-full max-w-[100px] "
-            name="member"
-            value={input.member}
-            onChange={handleChangeInput}
-          >
-            <option disabled selected>
-              for ?
-            </option>
-            <option>Everyone</option>
-            <option>Member</option>
-          </select>
+          {authUser?.type === "PREMIUM" ? (
+            <select
+              className="select select-bordered select-xs w-full max-w-[100px] "
+              name="type"
+              value={input?.type}
+              onChange={handleChangeInput}
+            >
+              <option disabled selected>
+                for ?
+              </option>
+              <option>FREE</option>
+              <option>PREMIUM</option>
+            </select>
+          ) : null}
         </div>
         {/* Content */}
         <div className="border-red-500">
@@ -147,6 +258,7 @@ function WritePage() {
             className="rounded-lg"
             theme="snow"
             value={value}
+            name="content"
             onChange={setValue} // (quillVal => setInput({...input , content: quillVal})
             modules={modules}
             style={{ height: 600 }}
@@ -157,6 +269,7 @@ function WritePage() {
           <button
             type="button"
             className="btn bg-green-500 px-8 rounded-full text-white hover:bg-green-600"
+            onClick={handleSaveDraft}
           >
             Save
           </button>

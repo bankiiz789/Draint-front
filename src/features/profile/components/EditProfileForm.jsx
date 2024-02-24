@@ -5,6 +5,9 @@ import ProfilePicture from "./ProfilePicture";
 import Input from "../../../components/Input";
 import { useRef, useState } from "react";
 import { updateUser } from "../../../api/user-api";
+import useProfile from "../hooks/useProfile";
+import Spinner from "../../../components/Spinner";
+import { toast } from "react-toastify";
 
 function EditProfileForm() {
   const { authUser } = useAuth();
@@ -13,35 +16,62 @@ function EditProfileForm() {
   const [image, setImage] = useState();
   const [coverImage, setCoverImage] = useState("");
   const [editUser, setEditUser] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [duplicate, setDuplicate] = useState(false);
+  const { fetchTargetUserProfile, checkDuplicate } = useProfile();
 
   const handleChangeEdit = (e) => {
+    setDuplicate(false);
     setEditUser({ ...editUser, [e.target.name]: e.target.value });
   };
 
   const handleSubmitEdit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      const checkUserName = await checkDuplicate(editUser?.userName);
+      console.log(editUser?.userName);
 
-    const formData = new FormData();
-    if (image) {
-      formData.append("profileImage", image);
-    }
-    if (coverImage) {
-      formData.append("coverImage", coverImage);
-    }
-    if (editUser.userName) {
-      formData.append("userName", editUser?.userName);
-    }
-    if (editUser.bio) {
-      formData.append("bio", editUser?.bio);
-    }
+      if (!editUser?.userName || editUser?.userName.trim() == "") {
+        return toast.error("please fill your username");
+      }
+      if (!checkUserName) {
+        setDuplicate(true);
+        return toast.error("username already in use");
+      }
 
-    console.log(formData, "'''''''''''''''''''");
+      setLoading(true);
+      const formData = new FormData();
+      if (image) {
+        formData.append("profileImage", image);
+      }
+      if (coverImage) {
+        formData.append("coverImage", coverImage);
+      }
+      if (editUser.userName) {
+        formData.append("userName", editUser?.userName);
+      }
+      if (editUser.bio) {
+        formData.append("bio", editUser?.bio);
+      }
 
-    await updateUser(formData);
+      console.log(formData, "'''''''''''''''''''");
+
+      await updateUser(formData);
+      await fetchTargetUserProfile();
+      document.getElementById("edit profile").close();
+    } catch (err) {
+      if (err.response?.data == "username and email already in use") {
+        return setErrorRegis("email or username is already in used");
+      }
+      toast.error(err.response?.data.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
+      {loading && <Spinner />}
       <input
         type="file"
         className="hidden"
@@ -77,13 +107,18 @@ function EditProfileForm() {
           src={image ? URL.createObjectURL(image) : authUser?.profileImage}
         />
       </div>
-      <div className="flex flex-col items-center mt-2">
+      <div className="flex flex-col items-center mt-2 items-end">
         <Input
           placeholder={authUser?.userName}
           name="userName"
           value={editUser?.userName}
           onChange={handleChangeEdit}
         />
+        {duplicate && (
+          <div className="text-red-500 mt-[-3] mb-2 w-full">
+            username has already in use
+          </div>
+        )}
         <textarea
           className="textarea textarea-bordered w-full "
           placeholder="Bio"
@@ -93,7 +128,10 @@ function EditProfileForm() {
         ></textarea>
       </div>
       <div className="flex justify-end gap-2 mt-2">
-        <div className="btn text-white bg-green-600 hover:bg-green-700">
+        <div
+          className="btn text-white bg-green-600 hover:bg-green-700"
+          onClick={() => document.getElementById("edit profile").close()}
+        >
           Cancel
         </div>
         <div
