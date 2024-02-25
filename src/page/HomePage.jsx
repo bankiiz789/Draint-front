@@ -7,7 +7,7 @@ import Input from "../components/Input";
 function HomePage() {
   return (
     <div className="w-full bg-[#f2f2f4]">
-      <div className=" max-w-[1000px] m-auto">
+      <div className=" max-w-[1000px] m-auto  min-h-screen ">
         {/* <div className="btn rounded-full mt-8 w-full bg-amber-500 text-white hover:bg-amber-600  ">
           Tell your Story
         </div> */}

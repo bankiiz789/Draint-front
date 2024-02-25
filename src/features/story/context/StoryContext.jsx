@@ -20,12 +20,16 @@ const initial = {
 export default function StoryContextProvider({ children }) {
   const [story, setStory] = useState([]);
 
-  useEffect(() => {
+  function getAllStory() {
     StoryApi.getAllStory()
       .then((res) => {
         setStory(res.data.story);
       })
       .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    getAllStory();
   }, []);
 
   const createStory = async (formData) => {
@@ -63,6 +67,7 @@ export default function StoryContextProvider({ children }) {
         updateStory,
         setStory,
         staffPick,
+        getAllStory,
       }}
     >
       {children}

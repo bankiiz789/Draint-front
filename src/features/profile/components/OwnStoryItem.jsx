@@ -17,6 +17,7 @@ import Modal from "../../../components/Modal";
 import formatTimeAgo from "../../../utils/time-ago";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import CategoryButton from "../../../components/CategoryButton";
 
 function OwnStoryItem({ story, info }) {
   const { authUser } = useAuth();
@@ -43,7 +44,10 @@ function OwnStoryItem({ story, info }) {
       <div className="card-body">
         {/* category and staff pick */}
         <div className="flex justify-between">
-          <div>{story?.category}</div>
+          <CategoryButton category={story?.category}>
+            {story?.category}
+          </CategoryButton>
+
           <div>{story.staffPick ? <StarIcon /> : null}</div>
         </div>
         {/* header */}
@@ -60,7 +64,11 @@ function OwnStoryItem({ story, info }) {
               className="dropdown dropdown-hover"
               onClick={(e) => e.stopPropagation()}
             >
-              <div tabIndex={0} role="button" className="btn m-1">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn m-1 bg-white border-none"
+              >
                 <DotIcon />
               </div>
               <ul
@@ -130,17 +138,17 @@ function OwnStoryItem({ story, info }) {
           <div>
             <div className="flex gap-2 items-center">
               <Avatar size="w-10" src={info?.profileImage} />
-              <div>{info.story?.userName}</div>
+              <div className="font-semibold">{authUser?.userName}</div>
               <div>{info.story?.type === "PREMIUM" ? <CrownIcon /> : null}</div>
             </div>
-            <div className="text-gray-500 font-bold ps-2 pt-2">
+            <div className="text-gray-500 text-[12px] font-bold ps-2 pt-2">
               {formatTimeAgo(story?.createdAt)}
             </div>
           </div>
           <div className="flex flex-row gap-2 items-center">
-            <div>
+            <div className="font-semibold">
               {story?.totalFav}
-              <span className="text-amber-500"> recommended</span>
+              <span className="text-amber-500 font-semibold"> recommended</span>
             </div>
           </div>
         </div>

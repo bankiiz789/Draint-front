@@ -8,26 +8,34 @@ function ProfileInfo() {
   const { profileUserFriend } = useProfile();
 
   return (
-    <div className="flex flex-col items-center mt-2 gap-2 mb-2">
+    <div className="flex flex-col items-center mt-2  gap-2 mb-3">
       <div className="flex flex-row gap-2">
-        <h1>{profileUserFriend?.userName}</h1>
+        <h1 className="font-bold text-[19px] text-green-600">
+          {profileUserFriend?.userName}
+        </h1>
         {profileUserFriend?.type === "PREMIUM" ? <CrownIcon /> : null}
-        {profileUserFriend?.type === "PENDING" ? (
-          <div>waiting for verify</div>
-        ) : null}
+        {profileUserFriend?.type === "PENDING" ? <PendingIcon /> : null}
       </div>
-      <p>Bio : {profileUserFriend?.bio}</p>
+      <p className="font-bold">
+        Bio : <span className=" font-normal">{profileUserFriend?.bio}</span>
+      </p>
       <div className="flex flex-row gap-8 justify-center">
         <div className="text-center">
-          <h2>{profileUserFriend.Stories?.length}</h2>
+          <h2 className="font-semibold text-green-600">
+            {profileUserFriend.Stories?.length}
+          </h2>
           <p>Stories</p>
         </div>
         <div className="text-center">
-          <h2>{profileUserFriend.follower?.length}</h2>
+          <h2 className="font-semibold text-green-600">
+            {profileUserFriend.follower?.length}
+          </h2>
           <p>Follower</p>
         </div>
         <div className="text-center">
-          <h2>{profileUserFriend.following?.length}</h2>
+          <h2 className="font-semibold text-green-600">
+            {profileUserFriend.following?.length}
+          </h2>
           <p>Following</p>
         </div>
       </div>

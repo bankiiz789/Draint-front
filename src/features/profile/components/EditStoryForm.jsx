@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { getTargetUserProfile } from "../../../api/user-api";
 import useProfile from "../hooks/useProfile";
 import useAuth from "../../auth/hooks/use-auth";
+import { CameraIcon } from "../../../icons";
+import Spinner from "../../../components/Spinner";
 
 const modules = {
   toolbar: [
@@ -24,6 +26,7 @@ function EditStoryForm({ story }) {
   const [quill, setQuill] = useState(story?.content);
   const [coverImage, setCoverImage] = useState("");
   const { setProfileUserFriend, fetchTargetUserProfile } = useProfile();
+  const [loading, setLoading] = useState(false);
   console.log(value);
 
   const handleChangeValue = (e) => {
@@ -32,6 +35,7 @@ function EditStoryForm({ story }) {
 
   const handleSubmit = async (e) => {
     try {
+      setLoading(true);
       e.preventDefault();
 
       const formData = new FormData();
@@ -62,97 +66,109 @@ function EditStoryForm({ story }) {
       document.getElementById(`${value?.id}`).close();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form className="flex flex-col gap-4 my-4" onSubmit={handleSubmit}>
-      <input
-        className="hidden"
-        type="file"
-        ref={coverEl}
-        onChange={(e) => {
-          if (e.target.files[0]) {
-            setCoverImage(e.target.files[0]);
-          }
-        }}
-      />
-      <div
-        className="border-2 border-dashed border-amber-500 h-[160px] cursor-pointer"
-        onClick={() => coverEl.current.click()}
-      >
-        <img
-          className="w-full bg-center h-full bg-contain"
-          src={coverImage ? URL.createObjectURL(coverImage) : value?.coverImage}
-          alt=""
-        />
-      </div>
-      {/* Title */}
-      <div className="w-full border-b-2 border-black">
+    <>
+      {loading && <Spinner />}
+      <form className="flex flex-col gap-4 my-4" onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="title"
-          className="input input-bordered w-full  border-none outline-none focus:outline-none placeholder:text-2xl placeholder:font-bold text-2xl font-bold"
-          name="title"
-          value={value?.title}
-          onChange={handleChangeValue}
+          className="hidden"
+          type="file"
+          ref={coverEl}
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              setCoverImage(e.target.files[0]);
+            }
+          }}
         />
-      </div>
-      {/* Category */}
-      <div className="flex gap-2">
-        <select
-          className="select select-bordered select-xs w-full max-w-[100px]"
-          name="category"
-          value={value?.category}
-          onChange={handleChangeValue}
+        <div
+          className="border-2 border-dashed border-amber-500 h-[160px] cursor-pointer relative flex justify-center"
+          onClick={() => coverEl.current.click()}
         >
-          <option disabled selected>
-            Category
-          </option>
-          <option>INSPIRE</option>
-          <option>EXPERIENCE</option>
-          <option>DRAMA</option>
-          <option>HORROR</option>
-          <option>ROMANTIC</option>
-          <option>GLOBAL</option>
-          <option>KNOWLEDGE</option>
-        </select>
-        {authUser?.type === "PREMIUM" ? (
+          <img
+            className="w-full bg-center h-full bg-contain inset-0 absolute"
+            src={
+              coverImage ? URL.createObjectURL(coverImage) : value?.coverImage
+            }
+            alt=""
+          />
+          {coverImage || value?.coverImage ? null : (
+            <div className="w-full flex justify-center items-center z-0 ">
+              <CameraIcon />
+            </div>
+          )}
+        </div>
+        {/* Title */}
+        <div className="w-full border-b-2 border-black">
+          <input
+            type="text"
+            placeholder="title"
+            className="input input-bordered w-full  border-none outline-none focus:outline-none placeholder:text-2xl placeholder:font-bold text-2xl font-bold"
+            name="title"
+            value={value?.title}
+            onChange={handleChangeValue}
+          />
+        </div>
+        {/* Category */}
+        <div className="flex gap-2">
           <select
-            className="select select-bordered select-xs w-full max-w-[100px] "
-            name="type"
-            value={value?.type}
+            className="select select-bordered select-xs w-full max-w-[100px]"
+            name="category"
+            value={value?.category}
             onChange={handleChangeValue}
           >
             <option disabled selected>
-              for ?
+              Category
             </option>
-            <option>Everyone</option>
-            <option>Member</option>
+            <option>INSPIRE</option>
+            <option>EXPERIENCE</option>
+            <option>DRAMA</option>
+            <option>HORROR</option>
+            <option>ROMANTIC</option>
+            <option>GLOBAL</option>
+            <option>KNOWLEDGE</option>
           </select>
-        ) : null}
-      </div>
-      {/* Content */}
-      <div className="border-red-500">
-        <ReactQuill
-          className="rounded-lg"
-          theme="snow"
-          value={quill}
-          onChange={setQuill} // (quillVal => setInput({...input , content: quillVal})
-          modules={modules}
-          style={{ height: 600 }}
-        />
-      </div>
-      {/* Button save and create story */}
-      <div className="self-end flex flex-row gap-4 mt-[3rem]">
-        <button
-          type="submit"
-          className="btn bg-amber-500 rounded-full text-white hover:bg-amber-600"
-        >
-          Save Edit
-        </button>
-      </div>
-    </form>
+          {authUser?.type === "PREMIUM" ? (
+            <select
+              className="select select-bordered select-xs w-full max-w-[100px] "
+              name="type"
+              value={value?.type}
+              onChange={handleChangeValue}
+            >
+              <option disabled selected>
+                for ?
+              </option>
+              <option>Everyone</option>
+              <option>Member</option>
+            </select>
+          ) : null}
+        </div>
+        {/* Content */}
+        <div className="border-red-500">
+          <ReactQuill
+            className="rounded-lg"
+            theme="snow"
+            value={quill}
+            onChange={setQuill} // (quillVal => setInput({...input , content: quillVal})
+            modules={modules}
+            style={{ height: 600 }}
+          />
+        </div>
+        {/* Button save and create story */}
+        <div className="self-end flex flex-row gap-4 mt-[3rem]">
+          <button
+            type="submit"
+            className="btn bg-amber-500 rounded-full text-white hover:bg-amber-600"
+          >
+            Save Edit
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

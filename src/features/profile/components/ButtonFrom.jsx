@@ -123,8 +123,8 @@ function ButtonFrom() {
         )}
       </div>
 
-      <div className="border-b border-black flex justify-between items-end">
-        <h1 className="p-4">Stories</h1>
+      <div className="border-b-2 border-amber-500 flex justify-between items-end">
+        <h1 className="p-4 text-xl font-bold ">Stories</h1>
         {/* slide right */}
         {authUser?.id === profileUserFriend?.id ? (
           <div className="p-4">
@@ -138,7 +138,7 @@ function ButtonFrom() {
                 {/* Page content here */}
                 <label
                   htmlFor="my-drawer-4"
-                  className="drawer-button btn bg-white border-none underline text-primary"
+                  className="drawer  bg-white border-none underline text-green-500 font-bold "
                 >
                   Your draft
                 </label>

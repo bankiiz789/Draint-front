@@ -13,6 +13,9 @@ import useDraft from "../features/draft/hooks/useDraft";
 import useAuth from "../features/auth/hooks/use-auth";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { CameraIcon } from "../icons";
+
 const modules = {
   toolbar: [
     [{ header: [false, 1, 2, 3, 4] }],
@@ -38,6 +41,9 @@ function WritePage() {
   const [coverImage, setCoverImage] = useState("");
   const [draft, setDraft] = useState("");
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  console.log(location.pathname);
 
   function fetchTargetDraft() {
     DraftApi.getTargetDraft(draftId)
@@ -94,7 +100,9 @@ function WritePage() {
       }
 
       await createStory(formData);
-      await deleteDraft(draft?.id);
+      if (location.pathname == `/draft/${draft?.id}`) {
+        await deleteDraft(draft?.id);
+      }
       fetchDraft();
       toast.success("create story successfully");
       setInput({
@@ -177,7 +185,7 @@ function WritePage() {
         </div>
         {/* Cover Image */}
         <input
-          className="hidden"
+          className="hidden border-none"
           type="file"
           ref={coverEl}
           onChange={(e) => {
@@ -187,23 +195,30 @@ function WritePage() {
           }}
         />
         <div
-          className="border-2 border-dashed border-amber-500 h-[160px] cursor-pointer"
+          className="border-4 border-dashed border-amber-500 h-[180px] cursor-pointer flex justify-center items-center bg-gray-100 aspect-auto overflow-auto relative"
           onClick={() => coverEl.current.click()}
         >
           {draft ? (
             <img
-              className="w-full bg-center h-full bg-contain"
+              className="w-full h-full inset-0 object-cover absolute"
               src={
                 coverImage ? URL.createObjectURL(coverImage) : draft?.coverImage
               }
               alt=""
             />
           ) : (
-            <img
-              className="w-full bg-center h-full bg-contain"
-              src={coverImage ? URL.createObjectURL(coverImage) : null}
-              alt=""
-            />
+            <>
+              <img
+                className="w-full h-full inset-0 object-cover absolute"
+                src={coverImage ? URL.createObjectURL(coverImage) : null}
+                alt=""
+              />
+            </>
+          )}
+          {coverImage ? null : (
+            <div className="w-full flex justify-center items-center z-0 ">
+              <CameraIcon />
+            </div>
           )}
         </div>
         {/* Title */}

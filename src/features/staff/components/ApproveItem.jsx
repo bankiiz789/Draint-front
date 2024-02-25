@@ -25,9 +25,9 @@ function ApproveItem({ transaction }) {
   };
   return (
     <div>
-      <div className="card card-side bg-base-100 shadow-xl">
-        <figure>
-          <img src={transaction?.slipSrc} alt="Movie" />
+      <div className="card card-side bg-base-100 shadow-xl h-[200px]">
+        <figure className="w-[200px] h-full">
+          <img src={transaction?.slipSrc} alt="" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">Validate QR code</h2>

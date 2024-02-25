@@ -40,7 +40,7 @@ function Navbar() {
               </div>
             </Link>
 
-            {authUser?.type === "STAFF" ? (
+            {authUser?.role === "STAFF" ? (
               <Link to="/tranfer">
                 <div className="btn rounded-full bg-white hover:bg-amber-500 shadow-none border-none hover:text-white group ">
                   <StaffIcon className="group-hover:fill-white fill-amber-500" />
