@@ -16,11 +16,13 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import formatTimeAgo from "../../../utils/time-ago";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function OwnStoryItem({ story, info }) {
   const { authUser } = useAuth();
   const { deleteStory, fetchTargetUserProfile } = useProfile();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     await deleteStory(story?.id);
@@ -30,7 +32,10 @@ function OwnStoryItem({ story, info }) {
 
   return (
     // <Link to={`/story/${story?.id}`}>
-    <div className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8 cursor-pointer hover:scale-105 transition duration-500 z-10">
+    <div
+      onClick={() => navigate(`/story/${story?.id}`)}
+      className="card w-full bg-base-100 shadow-xl max-h-[500px] my-8 cursor-pointer hover:scale-105 transition duration-500 z-10"
+    >
       <figure className="bg-amber-400 z-10">
         <img src={story?.coverImage || coverPhotoDefault}></img>
       </figure>
@@ -53,7 +58,7 @@ function OwnStoryItem({ story, info }) {
           {authUser?.id === info?.id ? (
             <div
               className="dropdown dropdown-hover"
-              // onClick={(e) => e.preventDefault()}
+              onClick={(e) => e.stopPropagation()}
             >
               <div tabIndex={0} role="button" className="btn m-1">
                 <DotIcon />

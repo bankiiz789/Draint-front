@@ -1,7 +1,7 @@
 import React from "react";
 import useAuth from "../../auth/hooks/use-auth";
 import useProfile from "../hooks/useProfile";
-import { CrownIcon } from "../../../icons";
+import { CrownIcon, PendingIcon } from "../../../icons";
 
 function ProfileInfo() {
   const { authUser } = useAuth();
@@ -12,6 +12,9 @@ function ProfileInfo() {
       <div className="flex flex-row gap-2">
         <h1>{profileUserFriend?.userName}</h1>
         {profileUserFriend?.type === "PREMIUM" ? <CrownIcon /> : null}
+        {profileUserFriend?.type === "PENDING" ? (
+          <div>waiting for verify</div>
+        ) : null}
       </div>
       <p>Bio : {profileUserFriend?.bio}</p>
       <div className="flex flex-row gap-8 justify-center">

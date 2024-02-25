@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useContext } from "react";
 import { createContext } from "react";
 import useAuth from "../../auth/hooks/use-auth";
 import { useEffect } from "react";
@@ -22,7 +21,10 @@ export default function ProfileContextProvider({ children }) {
   function fetchTargetUserProfile() {
     userApi
       .getTargetUserProfile(userId)
-      .then((res) => setProfileUserFriend(res.data.userProfileFriend[0]))
+      .then((res) => {
+        setProfileUserFriend(res.data.userProfileFriend[0]);
+        console.log(res.data.userProfileFriend[0]);
+      })
       .catch((err) => console.log(err));
     console.log(userId);
   }

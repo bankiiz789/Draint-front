@@ -27,8 +27,8 @@ function UpgradeUserForm() {
       }
 
       await upgradeUser(formData);
-      toast.success("upgrade success");
       await fetchTargetUserProfile();
+      toast.success("upgrade success");
       document.getElementById("upgrade account").close();
     } catch (err) {
       console.log(err);

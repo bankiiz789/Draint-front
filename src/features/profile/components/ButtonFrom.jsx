@@ -67,7 +67,7 @@ function ButtonFrom() {
             >
               <EditProfileForm />
             </Modal>
-            {authUser?.type === "FREE" ? (
+            {profileUserFriend?.type === "FREE" ? (
               <Modal
                 id="upgrade account"
                 title="Upgrade Account"

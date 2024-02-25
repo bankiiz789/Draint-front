@@ -109,7 +109,7 @@ function Read() {
                   {targetStory?.title}
                 </h2>
                 <h2 className="btn btn-ghost">
-                  <LockIcon />
+                  {targetStory?.type === "PREMIUM" ? <LockIcon /> : null}
                 </h2>
                 {authUser?.role === "STAFF" ? (
                   <>
