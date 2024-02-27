@@ -28,13 +28,18 @@ function EditProfileForm() {
   const handleSubmitEdit = async (e) => {
     try {
       e.preventDefault();
-      const checkUserName = await checkDuplicate(editUser?.userName);
-      console.log(editUser?.userName);
 
       if (!editUser?.userName || editUser?.userName.trim() == "") {
+        console.log("first");
         return toast.error("please fill your username");
       }
-      if (!checkUserName) {
+      const checkUserName = await checkDuplicate({
+        userName: editUser.userName,
+      });
+
+      console.log(checkUserName.data, "check");
+      if (checkUserName.data) {
+        console.log(editUser?.userName);
         setDuplicate(true);
         return toast.error("username already in use");
       }
@@ -60,9 +65,7 @@ function EditProfileForm() {
       await fetchTargetUserProfile();
       document.getElementById("edit profile").close();
     } catch (err) {
-      if (err.response?.data == "username and email already in use") {
-        return setErrorRegis("email or username is already in used");
-      }
+      console.log(err);
       toast.error(err.response?.data.message);
     } finally {
       setLoading(false);

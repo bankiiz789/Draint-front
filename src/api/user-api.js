@@ -15,4 +15,4 @@ export const unfollowed = (followingId) =>
 
 export const getMeMyMine = () => axios.get("/user/memymine");
 
-export const checkExistUser = (userName) => axios.get("user/check");
+export const checkExistUser = (userName) => axios.post("user/check", userName);

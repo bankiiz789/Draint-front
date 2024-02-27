@@ -60,9 +60,8 @@ export default function ProfileContextProvider({ children }) {
     await userApi.unfollowed(followingId);
   };
 
-  const checkDuplicate = async (userName) => {
+  const checkDuplicate = async (userName) =>
     await userApi.checkExistUser(userName);
-  };
 
   console.log(profileUserFriend);
 
